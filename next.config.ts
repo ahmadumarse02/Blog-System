@@ -5,7 +5,11 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "9t1a2s3pgv.ufs.sh",
+        hostname: "utfs.io", // Add this for UploadThing URLs
+      },
+      {
+        protocol: "https",
+        hostname: "9t1a2s3pgv.ufs.sh", // Your existing configuration
         port: ""
       }
     ]

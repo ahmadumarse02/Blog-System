@@ -26,7 +26,7 @@ async function getData(userId: string) {
 
 const SitesPage = async () => {
   const { getUser } = getKindeServerSession();
-  const user = getUser();
+  const user = await getUser();
 
   if(!user) {
     return redirect("/api/auth/login")

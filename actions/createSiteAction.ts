@@ -1,19 +1,14 @@
 "use server"
 
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 import { parseWithZod} from "@conform-to/zod"
-import { siteSchema } from "@/schemas/siteSchema";
+
 import prisma from "@/utils/prisma";
+import { siteSchema } from "@/schemas/siteSchema";
+import { requireUser } from "@/utils/requireUser";
 
 export async function CreateSiteAction(prvState: unknown, formdata: FormData) {
-    const { getUser } = getKindeServerSession();
-
-    const user = getUser();
-
-    if(!user) {
-        return redirect("/api/auth/login")
-    }
+   const user = await requireUser()
 
     const submission = parseWithZod(formdata, {
         schema: siteSchema
@@ -28,7 +23,7 @@ export async function CreateSiteAction(prvState: unknown, formdata: FormData) {
             name: submission.value.name,
             subdirectory: submission.value.subdirectory,
             description: submission.value.description,
-            userId: (await user).id
+            userId:  (await user).id,
         }
     })
 
