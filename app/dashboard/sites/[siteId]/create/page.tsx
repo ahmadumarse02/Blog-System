@@ -11,11 +11,14 @@ import { ArrowLeft, Atom } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image';
 import { toast } from 'sonner';
+import TailwindEditor from '@/components/dashboard/Editor/EditorWrapper';
+import { JSONContent } from 'novel';
 
 function CreatePage({ params }: { params: Promise<{ siteId: string }> }) {
     const { siteId } = use(params);
 
     const [imageUrl, setImageUrl] = useState<string | undefined>(undefined)
+    const [value, setValue] = useState<JSONContent | undefined>(undefined)
 
     return (
         <>
@@ -83,6 +86,15 @@ function CreatePage({ params }: { params: Promise<{ siteId: string }> }) {
                                     />
                                 )}
                             </div>
+
+                            <div className="grid gap-2">
+                                <Label>Article Content</Label>
+                                <TailwindEditor
+                                    onChange={setValue}
+                                    initialValue={value}
+                                />
+                            </div>
+                            <Button className='w-fit'>Submit</Button>
                         </form>
                     </CardContent>
                 </CardHeader>
