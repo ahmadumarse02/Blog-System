@@ -9,7 +9,7 @@ import { JSONContent } from "novel"
 
 async function getData(postId: string) {
     const data = await prisma.post.findUnique({
-        where:{
+        where: {
             id: postId,
         },
         select: {
@@ -21,8 +21,8 @@ async function getData(postId: string) {
             id: true,
         }
     })
-    
-    if(!data) {
+
+    if (!data) {
         return notFound()
     }
 
@@ -35,19 +35,19 @@ async function getData(postId: string) {
 async function EditPage({ params }: { params: Promise<{ siteId: string; articleId: string }> }) {
     const resolvedParams = await params;
     const data = await getData(resolvedParams.articleId)
-  return (
-    <div>
-        <div className="flex items-center">
-            <Button size="icon" variant="outline" asChild className="mr-5">
-                <Link href={`/sites/${(await resolvedParams).siteId}`}><ArrowLeft className="size-4"/></Link>
-            </Button>
-            <h1 className="text-2xl font-semibold">Edit Article</h1>
+    return (
+        <div>
+            <div className="flex items-center">
+                <Button size="icon" variant="outline" asChild className="mr-5">
+                    <Link href={`/sites/${(await resolvedParams).siteId}`}><ArrowLeft className="size-4" /></Link>
+                </Button>
+                <h1 className="text-2xl font-semibold">Edit Article</h1>
+            </div>
+            <EditArticleForm data={{ ...data, articleContent: data.articleContent as JSONContent }}
+                siteId={resolvedParams.siteId}
+            />
         </div>
-        <EditArticleForm data={{ ...data, articleContent: data.articleContent as JSONContent }} 
-        siteId={ resolvedParams.siteId}
-        />
-    </div>
-  )
+    )
 }
 
 export default EditPage
