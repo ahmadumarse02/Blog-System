@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useActionState } from "react";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -18,6 +17,7 @@ import { CreateSiteAction } from "@/actions/createSiteAction";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { siteSchema } from "@/schemas/siteSchema";
+import { SubmitButton } from "@/components/dashboard/SubmitButton";
 
 const CreateNewSitepage = () => {
   const [lastResult, action] = useActionState(CreateSiteAction, undefined);
@@ -66,7 +66,9 @@ const CreateNewSitepage = () => {
                   defaultValue={fields.subdirectory.initialValue}
                   placeholder="Subdirectory"
                 />
-                <p className="text-red-500 text-sm">{fields.name.errors}</p>
+                <p className="text-red-500 text-sm">
+                  {fields.subdirectory.errors}
+                </p>
               </div>
 
               <div className="grid gap-2">
@@ -83,7 +85,7 @@ const CreateNewSitepage = () => {
           </CardContent>
 
           <CardFooter>
-            <Button>Submit</Button>
+            <SubmitButton text="Create Site" />
           </CardFooter>
         </form>
       </Card>

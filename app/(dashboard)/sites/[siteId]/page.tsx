@@ -1,3 +1,4 @@
+import EmptyState from "@/components/dashboard/EmptyState";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,13 +26,7 @@ import {
 } from "@/components/ui/table";
 import prisma from "@/utils/prisma";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import {
-  Book,
-  FileIcon,
-  MoreHorizontalIcon,
-  PlusCircle,
-  Settings,
-} from "lucide-react";
+import { Book, MoreHorizontalIcon, PlusCircle, Settings } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -48,6 +43,11 @@ async function getData(userId: string, siteId: string) {
       title: true,
       cretedAt: true,
       id: true,
+      Site: {
+        select: {
+          subdirectory: true,
+        },
+      },
     },
     orderBy: {
       cretedAt: "desc",
@@ -71,12 +71,14 @@ async function SiteIdPage({ params }: { params: Promise<{ siteId: string }> }) {
   return (
     <>
       <div className="flex w-full justify-end gap-x-4">
-        <Button asChild variant="secondary">
-          <Link href="#">
-            <Book className="size-4 mr-2" />
-            View Blog
-          </Link>
-        </Button>
+        {data.length > 0 && data[0].Site?.subdirectory && (
+          <Button asChild variant="secondary">
+            <Link href={`/blog/${data[0].Site.subdirectory}`}>
+              <Book className="size-4 mr-2" />
+              View Blog
+            </Link>
+          </Button>
+        )}
         <Button asChild variant="secondary">
           <Link href={`/sites/${resolvedParams.siteId}/settings`}>
             <Settings className="size-4 mr-2" />
@@ -92,23 +94,12 @@ async function SiteIdPage({ params }: { params: Promise<{ siteId: string }> }) {
       </div>
 
       {data === undefined || data.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-md border border-dashed p-8 text-center animate-in fade-in-50">
-          <div className="flex size-20 items-center justify-center rounded-full bg-primary/10">
-            <FileIcon className="size-10 text-primary" />
-          </div>
-          <h2 className="mt-6 text-xl font-semibold">
-            You don&apos;t have any Sites created
-          </h2>
-          <p className="mb-8 mt-2 text-center text-sm leading-tight text-muted-foreground max-w-sm mx-auto">
-            You currently dont have any Sites. Please create some so that you
-            can see them right here!&quot;
-          </p>
-          <Button asChild>
-            <Link href="/sites/new">
-              <PlusCircle className="mr-2 size-4" /> Create Sites
-            </Link>
-          </Button>
-        </div>
+        <EmptyState
+          title="You don't have any Articles create"
+          description="You currently don't have any articles. Pleae create some so that tou can see them right here"
+          href={`/sites/${resolvedParams.siteId}/create`}
+          buttonText="Create Articles"
+        />
       ) : (
         <div className="">
           <Card>
