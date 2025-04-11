@@ -31,7 +31,7 @@ async function getData(userId: string, siteId: string) {
     return data;
 }
 
-async function SiteIdPage({ params }: { params: { siteId: string } }) {
+async function SiteIdPage({ params }: { params: Promise<{ siteId: string }> }) {
     const { getUser } = getKindeServerSession()
     const user = await getUser()
 
@@ -39,7 +39,8 @@ async function SiteIdPage({ params }: { params: { siteId: string } }) {
         return redirect("/api/auth/login")
     }
 
-    const data = await getData(user.id, params.siteId);
+    const resolvedParams = await params;
+    const data = await getData(user.id, resolvedParams.siteId);
 
     return (
         <>
@@ -57,7 +58,7 @@ async function SiteIdPage({ params }: { params: { siteId: string } }) {
                     </Link>
                 </Button>
                 <Button asChild>
-                    <Link href={`/sites/${params.siteId}/create`}>
+                    <Link href={`/sites/${resolvedParams.siteId}/create`}>
                         <PlusCircle className='size-4 mr-2' />
                         Create Article
                     </Link>
@@ -74,7 +75,7 @@ async function SiteIdPage({ params }: { params: { siteId: string } }) {
                     </h2>
                     <p className="mb-8 mt-2 text-center text-sm leading-tight text-muted-foreground max-w-sm mx-auto">
                         You currently dont have any Sites. Please create some so that you can
-                        see them right here!
+                        see them right here!&quot;
                     </p>
                     <Button asChild>
                         <Link href="/sites/new">
@@ -94,6 +95,7 @@ async function SiteIdPage({ params }: { params: { siteId: string } }) {
                             </CardDescription>
                         </CardHeader>
                         <CardContent>
+
                             <Table>
                                 <TableHeader>
                                     <TableRow>
@@ -123,7 +125,7 @@ async function SiteIdPage({ params }: { params: { siteId: string } }) {
                                                 </Badge>
                                             </TableCell>
 
-                                            <TableCell>{new Intl.DateTimeFormat("en-US", {
+                                            <TableCell>{new Intl.DateTimeFormat("en-Us", {
                                                 dateStyle: "medium",
                                             }).format(new Date(item.cretedAt))}
                                             </TableCell>
@@ -141,10 +143,10 @@ async function SiteIdPage({ params }: { params: { siteId: string } }) {
                                                         </DropdownMenuLabel>
                                                         <DropdownMenuSeparator />
                                                         <DropdownMenuItem asChild>
-                                                            <Link href={`/sites/${params.siteId}/${item.id}`}>Edit</Link>
+                                                            <Link href={`/sites/${resolvedParams.siteId}/${item.id}`}>Edit</Link>
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem>
-                                                            <Link href={`/sites/${params.siteId}/${item.id}/delete`}>Delete</Link>
+                                                           <Link href={`/sites/${resolvedParams.siteId}/${item.id}/delete`}>Delete</Link>
                                                         </DropdownMenuItem>
                                                     </DropdownMenuContent>
                                                 </DropdownMenu>
