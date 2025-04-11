@@ -6,13 +6,13 @@ import { redirect } from "next/navigation";
 
 export async function DeleteArticleAction(formData: FormData) {
   const user = await requireUser();
-    
+
   await prisma.post.delete({
     where: {
-        userId: user.id,
-        id: formData.get("articleId") as string,
-    }
-  })
+      userId: user.id,
+      id: formData.get("articleId") as string,
+    },
+  });
 
-  return redirect(`/sites/${formData.get("siteId")}`)
+  return redirect(`/sites/${formData.get("siteId")}`);
 }

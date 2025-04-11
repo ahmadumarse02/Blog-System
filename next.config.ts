@@ -10,10 +10,10 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "9t1a2s3pgv.ufs.sh", // Your existing configuration
-        port: ""
-      }
-    ]
-  }
+        port: "",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

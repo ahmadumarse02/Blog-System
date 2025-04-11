@@ -1,4 +1,4 @@
-import { withUt } from "uploadthing/tw"
+import { withUt } from "uploadthing/tw";
 /** @type {import('tailwindcss').Config} */
 const config = withUt({
   darkMode: ["class"],
@@ -61,6 +61,6 @@ const config = withUt({
   },
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
-})
+});
 
-export default config
+export default config;
