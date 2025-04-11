@@ -19,7 +19,7 @@ interface iAppProps {
     | undefined;
 }
 
-export function SubmitButton({ text, className, variant }: iAppProps) {
+function SubmitButton({ text, className, variant }: iAppProps) {
   const { pending } = useFormStatus();
   return (
     <>
@@ -40,3 +40,5 @@ export function SubmitButton({ text, className, variant }: iAppProps) {
     </>
   );
 }
+
+export default SubmitButton;
