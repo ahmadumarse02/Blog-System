@@ -30,7 +30,6 @@ function CreatePage({ params }: { params: Promise<{ siteId: string }> }) {
   const unwrappedParams = use(params);
   const siteId = unwrappedParams.siteId;
 
-  // Initialize all states with proper default values
   const [imageUrl, setImageUrl] = useState("");
   const [value, setValue] = useState<JSONContent>({ type: "doc", content: [] });
   const [slug, setSlug] = useState("");
