@@ -16,7 +16,7 @@ import { Atom } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
 import TailwindEditor from "../Editor/EditorWrapper";
-import { SubmitButton } from "../SubmitButton";
+import SubmitButton from "../SubmitButton";
 import { useActionState, useState } from "react";
 import { JSONContent } from "novel";
 import { useForm } from "@conform-to/react";
