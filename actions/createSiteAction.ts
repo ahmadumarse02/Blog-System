@@ -27,5 +27,5 @@ export async function CreateSiteAction(prvState: unknown, formdata: FormData) {
         }
     })
 
-    return redirect("/dashboard/sites")
+    return redirect("/sites")
 }
