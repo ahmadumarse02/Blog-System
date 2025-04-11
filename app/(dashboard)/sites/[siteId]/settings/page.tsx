@@ -1,5 +1,5 @@
 import React from "react";
-import SubmitButton from "@/components/dashboard/SubmitButton";
+import SubmitButton from "@/components/dashboard/submitButton";
 import { Button } from "@/components/ui/button";
 import {
   Card,

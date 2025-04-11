@@ -17,7 +17,7 @@ import { CreateSiteAction } from "@/actions/createSiteAction";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { siteSchema } from "@/schemas/siteSchema";
-import SubmitButton from "@/components/dashboard/SubmitButton";
+import SubmitButton from "@/components/dashboard/submitButton";
 
 const CreateNewSitepage = () => {
   const [lastResult, action] = useActionState(CreateSiteAction, undefined);

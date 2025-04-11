@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { UploadDropzone } from "@/utils/uploadthing";
 import Image from "next/image";
-import SubmitButton from '@/components/dashboard/SubmitButton';
+import SubmitButton from '@/components/dashboard/submitButton';
 import { toast } from "sonner";
 import { updateImage } from "@/actions/UpdateImage";
 
