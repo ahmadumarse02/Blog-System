@@ -78,7 +78,7 @@ async function SiteIdPage({ params }: { params: Promise<{ siteId: string }> }) {
           </Link>
         </Button>
         <Button asChild variant="secondary">
-          <Link href="#">
+          <Link href={`/sites/${resolvedParams.siteId}/settings`}>
             <Settings className="size-4 mr-2" />
             Settings
           </Link>
