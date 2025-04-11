@@ -17,7 +17,7 @@ import { CreateSiteAction } from "@/actions/createSiteAction";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { siteSchema } from "@/schemas/siteSchema";
-import SubmitButton from "@/components/dashboard/submitButton";
+import SubmitedButton from "@/components/dashboard/SubmitedButton";
 
 const CreateNewSitepage = () => {
   const [lastResult, action] = useActionState(CreateSiteAction, undefined);
@@ -85,7 +85,7 @@ const CreateNewSitepage = () => {
           </CardContent>
 
           <CardFooter>
-            <SubmitButton text="Create Site" />
+            <SubmitedButton text="Create Site" />
           </CardFooter>
         </form>
       </Card>

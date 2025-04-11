@@ -45,9 +45,9 @@ async function getData(subDir: string) {
 export default async function BlogPage({
   params,
 }: {
-  params: { name: string };
+  params: Promise<{ name: string }>;
 }) {
-  const name = (await params).name;
+  const { name } = await params;
   const data = await getData(name);
 
   return (

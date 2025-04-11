@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/card";
 import { UploadDropzone } from "@/utils/uploadthing";
 import Image from "next/image";
-import SubmitButton from '@/components/dashboard/submitButton';
 import { toast } from "sonner";
 import { updateImage } from "@/actions/UpdateImage";
+import SubmitedButton from "../SubmitedButton";
 
 interface props {
   siteId: string;
@@ -56,7 +56,7 @@ function UploadingImage({ siteId }: props) {
         <form action={updateImage}>
           <input type="hidden" name="siteId" value={siteId} />
           <input type="hidden" name="imageUrl" value={imageUrl} />
-          <SubmitButton text="Change Image" />
+          <SubmitedButton text="Change Image" />
         </form>
       </CardFooter>
     </Card>

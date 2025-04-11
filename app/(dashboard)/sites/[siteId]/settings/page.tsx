@@ -1,5 +1,4 @@
 import React from "react";
-import SubmitButton from "@/components/dashboard/submitButton";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,6 +11,7 @@ import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import UploadingImage from "@/components/dashboard/forms/UploadingImage";
 import { DeleteSite } from "@/actions/deleteSite";
+import SubmitedButton from "@/components/dashboard/SubmitedButton";
 
 async function page({ params }: { params: Promise<{ siteId: string }> }) {
   const resolvedParams = await params;
@@ -39,7 +39,7 @@ async function page({ params }: { params: Promise<{ siteId: string }> }) {
         <CardFooter>
           <form action={DeleteSite}>
             <input type="hidden" name="siteId" value={resolvedParams.siteId} />
-            <SubmitButton text="Delete Everything" variant="destructive" />
+            <SubmitedButton text="Delete Everything" variant="destructive" />
           </form>
         </CardFooter>
       </Card>

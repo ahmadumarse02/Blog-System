@@ -24,7 +24,7 @@ import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import { PostSchema } from "@/schemas/postSchema";
 import slugify from "react-slugify";
-import SubmitButton from "@/components/dashboard/SubmitButton";
+import SubmitedButton from "@/components/dashboard/SubmitedButton";
 
 function CreatePage({ params }: { params: Promise<{ siteId: string }> }) {
   const unwrappedParams = use(params);
@@ -162,7 +162,7 @@ function CreatePage({ params }: { params: Promise<{ siteId: string }> }) {
                 </p>
               </div>
 
-              <SubmitButton text="Create Article" />
+              <SubmitedButton text="Create Article" />
             </form>
           </CardContent>
         </CardHeader>

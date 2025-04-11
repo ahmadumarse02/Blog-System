@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import { DeleteArticleAction } from "@/actions/deleteArticleAction";
-import SubmitButton from "@/components/dashboard/submitButton";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,6 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import SubmitedButton from "@/components/dashboard/SubmitedButton";
 
 async function DeletePage({
   params,
@@ -38,7 +38,7 @@ async function DeletePage({
               value={resolvedParams.articleId}
             />
             <input type="hidden" name="siteId" value={resolvedParams.siteId} />
-            <SubmitButton variant="destructive" text="Delete Article" />
+            <SubmitedButton variant="destructive" text="Delete Article" />
           </form>
         </CardFooter>
       </Card>

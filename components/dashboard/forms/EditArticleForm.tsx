@@ -16,7 +16,6 @@ import { Atom } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
 import TailwindEditor from "../Editor/EditorWrapper";
-import SubmitButton from '@/components/dashboard/submitButton';
 import { useActionState, useState } from "react";
 import { JSONContent } from "novel";
 import { useForm } from "@conform-to/react";
@@ -24,6 +23,7 @@ import { parseWithZod } from "@conform-to/zod";
 import { PostSchema } from "@/schemas/postSchema";
 import slugify from "react-slugify";
 import { EditPostAction } from "@/actions/createPostAction";
+import SubmitedButton from "../SubmitedButton";
 
 interface iAppProps {
   data: {
@@ -180,7 +180,7 @@ export function EditArticleForm({ data, siteId }: iAppProps) {
             </p>
           </div>
 
-          <SubmitButton text="Edit Article" />
+          <SubmitedButton text="Edit Article" />
         </form>
       </CardContent>
     </Card>
