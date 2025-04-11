@@ -17,12 +17,12 @@ export const navLinks = [
     },
     {
         name: "Sites",
-        href: "/dashboard/sites",
+        href: "/sites",
         icon: Globe,
     },
     {
         name: "Pricing",
-        href: "/dashboard/pricing",
+        href: "/pricing",
         icon: DollarSign,
     },
 ];

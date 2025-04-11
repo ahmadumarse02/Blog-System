@@ -78,7 +78,7 @@ const SitesPage = async () => {
               </CardHeader>
               <CardFooter>
                 <Button className="w-full" asChild>
-                  <Link href={`/dashboard/sites/${item.id}`}>view Article</Link>
+                  <Link href={`/sites/${item.id}`}>view Article</Link>
                 </Button>
               </CardFooter>
             </Card>
