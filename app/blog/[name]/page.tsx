@@ -82,9 +82,7 @@ export default async function BlogPage({
             </CardHeader>
             <CardFooter>
               <Button className="w-full" asChild>
-                <Link href={`/blog/${name}/${item.slug}`}>
-                  Read More
-                </Link>
+                <Link href={`/blog/${name}/${item.slug}`}>Read More</Link>
               </Button>
             </CardFooter>
           </Card>
