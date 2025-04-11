@@ -32,18 +32,19 @@ async function getData(postId: string) {
     }
 }
 
-async function EditPage({ params }: { params: { articleId: string;siteId: string } }) {
-    const data = await getData(params.articleId)
+async function EditPage({ params }: { params: Promise<{ siteId: string; articleId: string }> }) {
+    const resolvedParams = await params;
+    const data = await getData(resolvedParams.articleId)
   return (
     <div>
         <div className="flex items-center">
             <Button size="icon" variant="outline" asChild className="mr-5">
-                <Link href={`/sites/${(await params).siteId}`}><ArrowLeft className="size-4"/></Link>
+                <Link href={`/sites/${(await resolvedParams).siteId}`}><ArrowLeft className="size-4"/></Link>
             </Button>
             <h1 className="text-2xl font-semibold">Edit Article</h1>
         </div>
         <EditArticleForm data={{ ...data, articleContent: data.articleContent as JSONContent }} 
-        siteId={ params.siteId}
+        siteId={ resolvedParams.siteId}
         />
     </div>
   )
