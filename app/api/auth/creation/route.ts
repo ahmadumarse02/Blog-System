@@ -28,5 +28,5 @@ export async function GET() {
     });
   }
 
-  return NextResponse.redirect("https://blog-system-zeta.vercel.app/dashboard");
+  return NextResponse.redirect("https://create-blog-alpha.vercel.app/dashboard");
 }
