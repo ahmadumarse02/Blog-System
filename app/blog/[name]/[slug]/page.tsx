@@ -1,3 +1,4 @@
+import React from "react";
 import RenderArticle from "@/components/dashboard/RenderArticle";
 import prisma from "@/utils/prisma";
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,6 @@ import { notFound } from "next/navigation";
 import { JSONContent } from "novel";
 
 async function getData(slug: string) {
-  "use server";
   const data = await prisma.post.findUnique({
     where: {
       slug: slug,
