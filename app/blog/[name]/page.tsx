@@ -52,14 +52,12 @@ export default async function BlogPage({
 
   return (
     <>
-      <nav className="grid grid-cols-3 my-10">
-        <div className="col-span-1">
-          <div className="flex items-center gap-x-2 justify-center">
-            <Image src={Logo} alt="Logo" width={40} height={40} />
-            <h1 className="text-3xl font-semibold">{data.name}</h1>
-          </div>
+      <nav className="my-10 w-full flex items-center justify-between">
+        <div className="flex items-center gap-x-2 justify-center">
+          <Image src={Logo} alt="Logo" width={40} height={40} />
+          <h1 className="text-3xl font-semibold">{data.name}</h1>
         </div>
-        <div className="col-span-2 flex w-full justify-end -mt-10">
+        <div>
           <ThemeToggle />
         </div>
       </nav>

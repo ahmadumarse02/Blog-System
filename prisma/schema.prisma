@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider    = "prisma-client-js"
+  emitSources = false
 }
 
 datasource db {
@@ -15,11 +16,12 @@ datasource db {
 }
 
 model User {
-  id           String @id @unique
+  id           String  @id @unique
   email        String
   firstName    String
   lastName     String
   profileImage String
+  customId     String? @unique
 
   createdAt DateTime @default(now())
 
@@ -53,12 +55,12 @@ model Post {
   image            String
   slug             String @unique
 
-  cretedAt     DateTime @default(now())
-  updatedAt    DateTime @default(now())
+  cretedAt  DateTime @default(now())
+  updatedAt DateTime @default(now())
 
-  User User? @relation(fields: [userId], references: [id])
+  User   User?   @relation(fields: [userId], references: [id])
   userId String?
 
-  Site Site? @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  Site   Site?   @relation(fields: [siteId], references: [id], onDelete: Cascade)
   siteId String?
 }
