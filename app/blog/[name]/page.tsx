@@ -1,3 +1,4 @@
+import React from "react";
 import prisma from "@/utils/prisma";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -10,15 +11,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Defaultimage from "@/public/default.png";
+import DefaultImage from "@/public/default.png";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-
-interface PageProps {
-  params: {
-    name: string;
-  };
-}
 
 async function getData(subDir: string) {
   const data = await prisma.site.findUnique({
@@ -31,9 +26,9 @@ async function getData(subDir: string) {
         select: {
           smallDescription: true,
           title: true,
+          slug: true,
           image: true,
           cretedAt: true,
-          slug: true,
           id: true,
         },
         orderBy: {
@@ -43,26 +38,26 @@ async function getData(subDir: string) {
     },
   });
 
-  if (!data) {
-    notFound();
-  }
-
+  if (!data) return notFound();
   return data;
 }
 
-export default async function BlogIndexPage({ params }: PageProps) {
-  const data = await getData(params.name);
+export default async function BlogPage({
+  params,
+}: {
+  params: Promise<{ name: string }>;
+}) {
+  const { name } = await params;
+  const data = await getData(name);
 
   return (
     <>
-      <nav className="grid grid-cols-3 my-10">
-        <div className="col-span-1" />
-        <div className="flex items-center gap-x-4 justify-center">
+      <nav className="my-10 w-full flex items-center justify-between">
+        <div className="flex items-center gap-x-2 justify-center">
           <Image src={Logo} alt="Logo" width={40} height={40} />
-          <h1 className="text-3xl font-semibold tracking-tight">{data.name}</h1>
+          <h1 className="text-3xl font-semibold">{data.name}</h1>
         </div>
-
-        <div className="col-span-1 flex w-full justify-end">
+        <div>
           <ThemeToggle />
         </div>
       </nav>
@@ -71,22 +66,21 @@ export default async function BlogIndexPage({ params }: PageProps) {
         {data.Post.map((item) => (
           <Card key={item.id}>
             <Image
-              src={item.image ?? Defaultimage}
+              src={item.image ?? DefaultImage}
               alt={item.title}
               className="rounded-t-lg object-cover w-full h-[200px]"
               width={400}
               height={200}
             />
-            <CardHeader>
-              <CardTitle className="truncate">{item.title}</CardTitle>
+            <CardHeader className="truncate">
+              <CardTitle>{item.title}</CardTitle>
               <CardDescription className="line-clamp-3">
                 {item.smallDescription}
               </CardDescription>
             </CardHeader>
-
             <CardFooter>
-              <Button asChild className="w-full">
-                <Link href={`/blog/${params.name}/${item.slug}`}>Read more</Link>
+              <Button className="w-full" asChild>
+                <Link href={`/blog/${name}/${item.slug}`}>Read More</Link>
               </Button>
             </CardFooter>
           </Card>
