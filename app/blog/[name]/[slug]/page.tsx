@@ -1,91 +1,78 @@
-import React from "react";
+import RenderArticle from "@/components/dashboard/RenderArticle";
 import prisma from "@/utils/prisma";
-import Image from "next/image";
-import { notFound } from "next/navigation";
-import Logo from "@/public/logo.svg";
-import { ThemeToggle } from "@/components/dashboard/ThemeToogle";
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import DefaultImage from "@/public/default.png";
 import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
+import { JSONContent } from "novel";
 
-async function getData(subDir: string) {
-  const data = await prisma.site.findUnique({
+async function getData(slug: string) {
+  const data = await prisma.post.findUnique({
     where: {
-      subdirectory: subDir,
+      slug: slug,
     },
     select: {
-      name: true,
-      Post: {
-        select: {
-          smallDescription: true,
-          title: true,
-          slug: true,
-          image: true,
-          cretedAt: true,
-          id: true,
-        },
-        orderBy: {
-          cretedAt: "desc",
-        },
-      },
+      articleContent: true,
+      title: true,
+      smallDescription: true,
+      image: true,
+      cretedAt: true,
     },
   });
 
-  if (!data) return notFound();
+  if (!data) {
+    return notFound();
+  }
+
   return data;
 }
 
-export default async function BlogPage({
-  params,
-}: {
-  params: Promise<{ name: string }>;
-}) {
-  const { name } = await params;
-  const data = await getData(name);
+const SlugRoute = async ({ params }: {params: Promise<{name: string ; slug: string}>}) => {
+  const { slug, name } = await params;
+  const data = await getData(slug);
 
   return (
     <>
-      <nav className="my-10 w-full flex items-center justify-between">
-        <div className="flex items-center gap-x-2 justify-center">
-          <Image src={Logo} alt="Logo" width={40} height={40} />
-          <h1 className="text-3xl font-semibold">{data.name}</h1>
-        </div>
-        <div>
-          <ThemeToggle />
-        </div>
-      </nav>
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7">
-        {data.Post.map((item) => (
-          <Card key={item.id}>
-            <Image
-              src={item.image ?? DefaultImage}
-              alt={item.title}
-              className="rounded-t-lg object-cover w-full h-[200px]"
-              width={400}
-              height={200}
-            />
-            <CardHeader className="truncate">
-              <CardTitle>{item.title}</CardTitle>
-              <CardDescription className="line-clamp-3">
-                {item.smallDescription}
-              </CardDescription>
-            </CardHeader>
-            <CardFooter>
-              <Button className="w-full" asChild>
-                <Link href={`/blog/${name}/${item.slug}`}>Read More</Link>
-              </Button>
-            </CardFooter>
-          </Card>
-        ))}
+      <div className="flex items-center gap-x-3 pt-10 pb-5">
+        <Button size="icon" variant="outline" asChild>
+          <Link href={`/blog/${name}`}>
+            <ArrowLeft className="size-4" />
+          </Link>
+        </Button>
+        <h1 className="text-xl font-medium">Go Back</h1>
       </div>
+
+      <div className="flex flex-col items-center justify-center mb-10">
+        <div className="m-auto w-full text-center md:w-7/12">
+          <p className="m-auto my-5 w-10/12 text-sm font-light text-muted-foreground md:text-base">
+            {new Intl.DateTimeFormat("en-US", {
+              dateStyle: "medium",
+            }).format(data.cretedAt)}
+          </p>
+          <h1 className="mb-5 text-3xl font-bold md:text-6xl tracking-tight">
+            {data.title}
+          </h1>
+          <p className="m-auto w-10/12 text-muted-foreground line-clamp-3">
+            {data.smallDescription}
+          </p>
+        </div>
+      </div>
+
+      <div className="relative m-auto mb-10 h-80 w-full max-w-screen-lg overflow-hidden md:mb-20 md:h-[450px] md:w-5/6 md:rounded-2xl lg:w-2/3">
+        <Image
+          src={data.image}
+          alt={data.title}
+          width={1200}
+          height={630}
+          className="h-full w-full object-cover"
+          priority
+        />
+      </div>
+
+      <RenderArticle json={data.articleContent as JSONContent} />
     </>
   );
 }
+
+export default SlugRoute;
