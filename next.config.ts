@@ -1,19 +1,20 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "utfs.io", // Add this for UploadThing URLs
+        hostname: "utfs.io",
+        pathname: "/f/**",
       },
       {
         protocol: "https",
-        hostname: "9t1a2s3pgv.ufs.sh", // Your existing configuration
-        port: "",
+        hostname: "**.ufs.sh",
+        pathname: "/**",
       },
     ],
   },
+  
 };
 
 export default nextConfig;

@@ -1,5 +1,5 @@
 import React from "react";
-import RenderArticle from "@/components/dashboard/RenderArticle";
+import { RenderArticle } from "@/components/dashboard/RenderArticle";
 import prisma from "@/utils/prisma";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
