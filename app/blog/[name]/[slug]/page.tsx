@@ -1,3 +1,4 @@
+import React from "react";
 import RenderArticle from "@/components/dashboard/RenderArticle";
 import { Button } from "@/components/ui/button";
 import prisma from "@/utils/prisma";
@@ -6,13 +7,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { JSONContent } from "novel";
-import React from "react";
 
 async function getData(slug: string) {
   const data = await prisma.post.findUnique({
-    where: {
-      slug: slug,
-    },
+    where: { slug },
     select: {
       articleContent: true,
       title: true,
@@ -23,19 +21,20 @@ async function getData(slug: string) {
   });
 
   if (!data) {
-    return notFound();
+    notFound(); // ❗ just call it, don't return it
   }
 
   return data;
 }
 
-async function SlugPage({
+export default async function SlugPage({
   params,
 }: {
-  params: Promise<{ slug: string; name: string }>;
+  params: { slug: string; name: string };
 }) {
-  const { slug, name } = await params;
+  const { slug, name } = params;
   const data = await getData(slug);
+
   return (
     <>
       <div className="flex items-center gap-x-3 pt-10 pb-5">
@@ -46,6 +45,7 @@ async function SlugPage({
         </Button>
         <h1 className="text-xl font-medium">Go back</h1>
       </div>
+
       <div className="flex flex-col items-center justify-center mb-10">
         <div className="m-auto w-full md:w-7/12 text-center">
           <p className="m-auto my-5 w-10/12 text-sm font-light text-muted-foreground md:text-base">
@@ -60,10 +60,7 @@ async function SlugPage({
         </div>
       </div>
 
-      <div
-        className="relative mb-10 m-auto h-80 w-full
-            max-w-screen-lg overflow-hidden md:mb-20 md:h-[450px] md:w-5/6 md:rounded-2xl lg:w-2/3"
-      >
+      <div className="relative mb-10 m-auto h-80 w-full max-w-screen-lg overflow-hidden md:mb-20 md:h-[450px] md:w-5/6 md:rounded-2xl lg:w-2/3">
         <Image
           src={data.image}
           alt={data.title}
@@ -73,9 +70,8 @@ async function SlugPage({
           priority
         />
       </div>
+
       <RenderArticle json={data.articleContent as JSONContent} />
     </>
   );
 }
-
-export default SlugPage;
